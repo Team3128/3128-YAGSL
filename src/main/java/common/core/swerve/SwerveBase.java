@@ -4,8 +4,6 @@ import java.util.List;
 
 import common.hardware.motorcontroller.NAR_Motor;
 import common.hardware.motorcontroller.NAR_Motor.Control;
-import common.utility.narwhaldashboard.NarwhalDashboard;
-import common.utility.shuffleboard.NAR_Shuffleboard;
 import common.utility.sysid.CmdSysId;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
@@ -54,21 +52,6 @@ public abstract class SwerveBase extends SubsystemBase {
 
         odometry = new SwerveDrivePoseEstimator(kinematics, new Rotation2d(), getPositions(),
                                                 estimatedPose, stateStdDevs, visionMeasurementDevs);
-    }
-
-    public void initShuffleboard() {
-        for (final SwerveModule module : modules) {
-            NAR_Shuffleboard.addData("Swerve", "CANcoder " + module.moduleNumber, ()-> module.getAbsoluteAngle().getDegrees(), 0, module.moduleNumber);
-            NAR_Shuffleboard.addData("Swerve", "Angle Motor " + module.moduleNumber, ()-> module.getState().angle.getDegrees(), 1, module.moduleNumber);
-            NAR_Shuffleboard.addData("Swerve", "Drive Motor" + module.moduleNumber, ()-> module.getState().speedMetersPerSecond, 2, module.moduleNumber);
-        }
-        NAR_Shuffleboard.addData("Swerve", "Pose", ()-> estimatedPose.toString(), 3, 0, 4, 1);
-        NAR_Shuffleboard.addData("Swerve", "Robot Velocity", ()-> getRobotVelocity().toString(), 3, 1, 4, 1);
-        NAR_Shuffleboard.addData("Swerve", "Velocity", ()-> getSpeed(), 3, 3, 1, 1);
-        NAR_Shuffleboard.addData("Swerve", "Field Velocity", ()-> getFieldVelocity().toString(), 3, 2, 4, 1);
-        NAR_Shuffleboard.addData("Swerve", "Gyro", ()-> getYaw(), 7, 0, 2, 2).withWidget("Gyro");
-        NAR_Shuffleboard.addCommand("Swerve", "Reset Gyro", runOnce(()-> resetGyro(0)), 7, 2);
-        NAR_Shuffleboard.addCommand("Swerve", "Identify Offsets", identifyOffsetsCommand(), 7, 3);
     }
 
     public void drive(Translation2d translationVel, Rotation2d rotationVel) {
@@ -266,12 +249,6 @@ public abstract class SwerveBase extends SubsystemBase {
     public SwerveModule getModule(int moduleNumber) {
         if(moduleNumber < 0 || moduleNumber > 3) throw new IllegalArgumentException("Module number must be between 0 and 3");
         return modules[moduleNumber];
-    }
-
-    public void initStateCheck() {
-        for (final SwerveModule module : modules) {
-            NarwhalDashboard.getInstance().checkState("Module" + module.moduleNumber, ()-> module.getRunningState());
-        }
     }
 
     public Pose2d getPredictedPose(ChassisSpeeds velocity, double dt) {

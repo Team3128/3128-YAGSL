@@ -17,7 +17,6 @@ import common.core.swerve.SwerveModuleConfig.SwerveMotorConfig;
 import common.hardware.motorcontroller.NAR_Motor;
 import common.hardware.motorcontroller.NAR_Motor.Control;
 import common.hardware.motorcontroller.NAR_Motor.Neutral;
-import common.utility.narwhaldashboard.NarwhalDashboard.State;
 
 import java.util.function.Supplier;
 
@@ -245,17 +244,4 @@ public class SwerveModule {
         return angleEncoder;
     }
     
-    /**
-     * Return the state of the swerve module.
-     * @return State of the swerve module.
-     */
-    public State getRunningState() {
-        if (driveMotor.getState() == State.RUNNING && angleMotor.getState() == State.RUNNING) {
-            return State.RUNNING; 
-        }
-        if (driveMotor.getState() == State.DISCONNECTED || angleMotor.getState() == State.DISCONNECTED) {
-            return State.PARTIALLY_RUNNING; 
-        }
-        return State.DISCONNECTED;
-    }
 }

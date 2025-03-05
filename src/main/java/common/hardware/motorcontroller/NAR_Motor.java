@@ -5,8 +5,6 @@ import java.util.LinkedList;
 
 import common.core.controllers.PIDFFConfig;
 import common.core.misc.NAR_Robot;
-import common.utility.Log;
-import common.utility.narwhaldashboard.NarwhalDashboard;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 
@@ -230,8 +228,6 @@ public abstract class NAR_Motor implements AutoCloseable {
                 setFollowerStatusFrames();
                 break;
         }
-
-        Log.debug(Log.Type.MOTOR, "Motor (" + this.id + ")", config.toString());
     }
 
     /**
@@ -438,12 +434,6 @@ public abstract class NAR_Motor implements AutoCloseable {
 	 * @param limit The current limit in Amps.
 	 */
     public abstract void setSupplyLimit(int limit);
-
-    /**
-	 * Returns motor and motor controller functionality.
-	 * @return State of the motor controller and motor.
-	 */
-    public abstract NarwhalDashboard.State getState();
 
     /**
      * Set the status frame rate to Team 3128's defaults

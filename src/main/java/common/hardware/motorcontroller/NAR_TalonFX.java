@@ -17,8 +17,6 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import common.core.controllers.PIDFFConfig;
-import common.utility.Log;
-import common.utility.narwhaldashboard.NarwhalDashboard;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Angle;
@@ -91,7 +89,6 @@ public class NAR_TalonFX extends NAR_Motor {
 			}
 		}
 		numFailedConfigs ++;
-		Log.info("Motors", "Failed to configure Talon FX " + motor.getDeviceID());
 	}
 
     @Override
@@ -234,11 +231,6 @@ public class NAR_TalonFX extends NAR_Motor {
 	public void setFollowerStatusFrames() {
 		configTalonFX(()-> motor.optimizeBusUtilization());
 	}
-
-    @Override
-    public NarwhalDashboard.State getState() {
-        return NarwhalDashboard.State.RUNNING;
-    }
 
 
     public TalonFX getMotor() {

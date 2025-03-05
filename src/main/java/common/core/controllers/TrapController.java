@@ -3,7 +3,6 @@ package common.core.controllers;
 import java.util.function.DoubleSupplier;
 
 import common.hardware.motorcontroller.NAR_Motor;
-import common.utility.narwhaldashboard.NarwhalDashboard;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -98,7 +97,6 @@ public class TrapController extends ControllerBase {
             setpoint.position = goalMinDistance + measurement;
             tempSetpoint.position = setpointMinDistance + measurement;
         }
-        if (shouldLog) NarwhalDashboard.getInstance().sendMessage("Position: " + tempSetpoint.position + "Velocity: " + tempSetpoint.velocity);
         tempSetpoint = profile.calculate(getPeriod(), tempSetpoint, setpoint);
         controller.setSetpoint(tempSetpoint.position);
         final double output = super.calculate(measurement);
@@ -128,7 +126,6 @@ public class TrapController extends ControllerBase {
         final double velocityGain = getConfig().getkV() * prevSetpoint.velocity;
         final double accelGain = getConfig().getkA() * (tempSetpoint.velocity - prevSetpoint.velocity) / getPeriod();
         final double gravityGain = getConfig().getkG() * getConfig().getkG_Function().getAsDouble();
-        if (shouldLog) NarwhalDashboard.getInstance().sendMessage("Static Gain: " + staticGain + " Velocity Gain: " + velocityGain + " Acceleration Gain: " + accelGain + " Gravity Gain: " + gravityGain);
         return staticGain + velocityGain + accelGain + gravityGain;
     }
 

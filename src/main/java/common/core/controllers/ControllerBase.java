@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;
 import common.hardware.motorcontroller.NAR_Motor;
-import common.utility.shuffleboard.NAR_Shuffleboard;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
